@@ -132,7 +132,7 @@ def relabeling_strategy(df, params):
     precision = calculate_precision(y_true, best_predictions)
     recall = calculate_recall(y_true, best_predictions)
 
-    return best_f1
+    return best_f1, accuracy, precision, recall
 
 
 def predict_labels(df_sort, num):

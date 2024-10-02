@@ -56,7 +56,7 @@ class DDPM(BaseModel):
         l_pix = l_pix.sum() / int(b * c * h * w)
 
         l_pix.backward()
-        self.optG.step()
+        loss = self.optG.step()
 
         # set log
         self.log_dict['l_pix'] = l_pix.item()

@@ -59,12 +59,20 @@ def time_test(params, strategy_params, temp_list):
     sr_datas = sr_datas.reset_index(drop=True)
     differ_datas = differ_datas.reset_index(drop=True)
 
+
     for i in range(params['row_num'], all_datas.shape[0]):
         all_datas.drop(index=[i], inplace=True)
         sr_datas.drop(index=[i], inplace=True)
         differ_datas.drop(index=[i], inplace=True)
 
-    f1 = Metrics.relabeling_strategy(all_datas, strategy_params)
+    # 推論結果をCSVファイルに保存
+    all_datas.to_csv(os.path.join(result_path, 'all_data_results.csv'), index=False)
+    sr_datas.to_csv(os.path.join(result_path, 'sr_data_results.csv'), index=False)
+    differ_datas.to_csv(os.path.join(result_path, 'differ_data_results.csv'), index=False)
+    
+    f1,accuracy,precision, recall  = Metrics.relabeling_strategy(all_datas, strategy_params)
+    # 正解率を出力
+    print('Accuracy: {:.4f}'.format(accuracy))
 
     temp_f1 = Decimal(f1).quantize(Decimal("0.0000"))
 
